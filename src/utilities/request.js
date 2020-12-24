@@ -8,11 +8,15 @@ myRequest.prototype.send = function(uri, method, body) {
     body: requestBody,
     headers: {
       "content-type": "application/json",
-      authorization: this.authorization ?? sessionStorage.getItem("token"),
+      authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   };
   let url = myRequest.prototype.baseUrl + uri;
   return fetch(url, requestOptions).then((res) => {
+    if (res.status == 401) {
+      sessionStorage.removeItem("token");
+      alert("抱歉，您未被授權使用該功能。");
+    }
     return res.json();
   });
 };

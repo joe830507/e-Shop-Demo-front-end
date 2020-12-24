@@ -1,14 +1,9 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
+import customer from "./customer";
+import product from "./product";
 
 const store = createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+  modules: { customer, product },
+});
 
-export default store
+export default store;

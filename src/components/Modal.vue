@@ -1,60 +1,42 @@
 <template>
   <!-- Login Modal -->
-  <div
-    class="modal fade"
-    id="Login"
-    tabindex="-1"
-    aria-labelledby="LoginLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="Login" tabindex="-1" aria-labelledby="LoginLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="LoginLabel">Login</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
+          <h5 class="modal-title" id="LoginLabel">登入</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Account</label>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                v-model="customer.account"
-              />
+            <div class="row mb-3">
+              <label for="Account" class="col-sm-2 col-form-label">帳號</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="Account" v-model="customer.account" />
+              </div>
             </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-                v-model="customer.password"
-              />
+            <div class="row mb-3">
+              <label for="Password" class="col-sm-2 col-form-label">密碼</label>
+              <div class="col-sm-10">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="Password"
+                  v-model="customer.password"
+                />
+              </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary" @click="login">
-            Login
-          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" @click="login">Login</button>
         </div>
       </div>
     </div>
   </div>
-
   <!-- Register Modal -->
   <div
     class="modal fade"
@@ -66,54 +48,35 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="RegisterLabel">Register</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
+          <h5 class="modal-title" id="RegisterLabel">註冊</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">...</div>
+        <div class="modal-body">
+          <form>
+            <div class="row mb-3">
+              <label for="Account" class="col-sm-2 col-form-label">帳號</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="Account" v-model="customer.account" />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="Password" class="col-sm-2 col-form-label">密碼</label>
+              <div class="col-sm-10">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="Password"
+                  v-model="customer.password"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Send</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Employee Login Modal -->
-  <div
-    class="modal fade"
-    id="EmployeeLogin"
-    tabindex="-1"
-    aria-labelledby="EmployeeLoginLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="EmployeeLoginLabel">Employee Login</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">...</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Login</button>
         </div>
       </div>
     </div>
@@ -122,33 +85,37 @@
 
 <script>
 import $ from "jquery";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
       customer: {
         account: null,
-        password: null,
-      },
+        password: null
+      }
     };
   },
   methods: {
+    ...mapActions(["custLogin", "custRegister"]),
     login() {
-      let body = {
-        account: this.customer.account,
-        password: this.customer.password,
-      };
-      let res = this.$http.send("/emplogin", "POST", body);
-      res.then((res) => {
-        const token = `bearer ${res.token}`;
-        sessionStorage.setItem("token", token);
+      let requestBody = Object.assign({}, this.customer);
+      requestBody.password = this.encrypt(this.customer.password);
+      this.custLogin(requestBody).then(() => {
         this.customer.account = null;
         this.customer.password = null;
         $("#Login").modal("hide");
       });
     },
-  },
+    register() {
+      this.custRegister(this.customer).then(() => {
+        this.customer.account = null;
+        this.customer.password = null;
+        $("#Register").modal("hide");
+      });
+    }
+  }
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 </style>

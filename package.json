@@ -1,5 +1,5 @@
 {
-  "name": "e-shop-front-end",
+  "name": "e-shop",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,10 +10,12 @@
   "dependencies": {
     "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
+    "crypto-js": "^4.0.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "less": "^3.13.0",
     "less-loader": "^7.1.0",
+    "module": "^1.2.5",
     "popper.js": "^1.16.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
