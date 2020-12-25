@@ -1,13 +1,11 @@
 <template>
-  <div class="container">
-    <div class="row"></div>
-  </div>
+  <p>I am Home</p>
 </template>
 
 <script>
 export default {
   created() {},
-  methods: {}
+  methods: {},
 };
 </script>
 

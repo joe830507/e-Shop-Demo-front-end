@@ -12,6 +12,7 @@ myRequest.prototype.send = function(uri, method, body) {
     },
   };
   let url = myRequest.prototype.baseUrl + uri;
+  console.log(url)
   return fetch(url, requestOptions).then((res) => {
     if (res.status == 401) {
       sessionStorage.removeItem("token");
