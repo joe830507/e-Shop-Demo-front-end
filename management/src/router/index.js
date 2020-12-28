@@ -1,56 +1,125 @@
-import { createRouter, createWebHistory } from "vue-router";
+import Vue from "vue";
+import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Employee from "../views/Employee";
 import Product from "../views/Product";
 import Customer from "../views/Customer";
-import PurchaseRecord from "../views/PurchaseRecord";
+import Supplier from "../views/Supplier.vue";
+// ----------------Employee
+import EmployeeTable from "../components/Employee/EmployeeTable.vue";
+import AddEmployee from "../components/Employee/AddEmployee.vue";
+import UpdateEmployee from "../components/Employee/UpdateEmployee.vue";
+// ----------------Supplier
+import SupplierTable from "../components/Supplier/SupplierTable.vue";
+import AddSupplier from "../components/Supplier/AddSupplier.vue";
+import UpdateSupplier from "../components/Supplier/UpdateSupplier.vue";
+// ----------------Customer
+import CustomerTable from "../components/Customer/CustomerTable.vue";
+import AddCustomer from "../components/Customer/AddCustomer.vue";
+import UpdateCustomer from "../components/Customer/UpdateCustomer.vue";
+
+Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "*",
+    redirect: {
+      name: "Home",
+    },
+  },
+  {
     path: "/home",
     name: "Home",
-    chineseName: "首頁",
+    meta: {
+      chineseName: "首頁",
+    },
     component: Home,
   },
   {
     path: "/employee",
-    name: "Employee",
-    chineseName: "員工",
+    meta: {
+      chineseName: "員工",
+    },
     component: Employee,
+    children: [
+      {
+        path: "/",
+        name: "EmployeeTable",
+        component: EmployeeTable,
+      },
+      {
+        path: "addEmp",
+        name: "AddEmployee",
+        component: AddEmployee,
+      },
+      {
+        path: "updateEmp",
+        name: "UpdateEmployee",
+        component: UpdateEmployee,
+      },
+    ],
+  },
+  {
+    path: "/customer",
+    meta: {
+      chineseName: "顧客",
+    },
+    component: Customer,
+    children: [
+      {
+        path: "/",
+        name: "CustomerTable",
+        component: CustomerTable,
+      },
+      {
+        path: "addCustomer",
+        name: "AddCustomer",
+        component: AddCustomer,
+      },
+      {
+        path: "updateCustomer",
+        name: "UpdateCustomer",
+        component: UpdateCustomer,
+      },
+    ],
   },
   {
     path: "/product",
     name: "Product",
-    chineseName: "產品",
+    meta: {
+      chineseName: "產品",
+    },
     component: Product,
   },
   {
-    path: "/customer",
-    name: "Customer",
-    chineseName: "顧客",
-    component: Customer,
-  },
-  {
-    path: "/purchaseRecord",
-    name: "PurchaseRecord",
-    chineseName: "購買紀錄",
-    component: PurchaseRecord,
+    path: "/supplier",
+    meta: {
+      chineseName: "供應商",
+    },
+    component: Supplier,
+    children: [
+      {
+        path: "/",
+        name: "SupplierTable",
+        component: SupplierTable,
+      },
+      {
+        path: "addSupplier",
+        name: "AddSupplier",
+        component: AddSupplier,
+      },
+      {
+        path: "updateSupplier",
+        name: "UpdateSupplier",
+        component: UpdateSupplier,
+      },
+    ],
   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.length == 0) {
-    next({
-      path: "/home",
-    });
-  } else {
-    next();
-  }
+const router = new VueRouter({
+  mode: "history",
+  routes: routes,
 });
 
 export default router;

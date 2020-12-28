@@ -1,5 +1,5 @@
 <template>
-  <p>I am PurchaseRecord</p>
+  <div></div>
 </template>
 
 <script>

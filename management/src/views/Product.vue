@@ -1,9 +1,14 @@
 <template>
-  <p>I am Product</p>
+  <router-view></router-view>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  methods: {}
+};
 </script>
 
 <style>

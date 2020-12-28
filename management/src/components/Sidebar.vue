@@ -1,12 +1,12 @@
 <template>
   <div class="sidenav">
-    <router-link
-      v-for="route in $router.options.routes"
-      :key="route"
-      :to="{ name: route.name }"
-      tag="a"
-      >{{ route.chineseName }}</router-link
-    >
+    <div v-for="(route,index) in $router.options.routes" :key="index">
+      <router-link
+        v-if="isLogin || (!isLogin && route.name =='Home')"
+        :to="{ path:route.path }"
+        tag="a"
+      >{{ route.meta?route.meta.chineseName:"" }}</router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -14,7 +14,7 @@ export default {
   data() {
     return {};
   },
-  created() {},
+  created() {}
 };
 </script>
 <style lang="less" scoped>

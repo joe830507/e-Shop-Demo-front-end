@@ -12,19 +12,25 @@
       </div>
     </div>
     <Modal />
+    <Loading :hidden="displayLoading" />
   </div>
 </template>
 <script>
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Modal from "./components/Modal";
+import Loading from "./components/Loading";
 export default {
   name: "App",
+  data() {
+    return {};
+  },
   components: {
     Navbar,
     Sidebar,
     Modal,
-  },
+    Loading
+  }
 };
 </script>
 

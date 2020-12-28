@@ -1,49 +1,12 @@
 <template>
-  <table class="table table-dark table-striped mt-5 ml-3">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-export default {
-  created() {
-    this.getEmployees();
-  },
-  methods: {
-    ...mapActions(["getEmployees"]),
-  },
-  computed: {
-    ...mapGetters(["employees"]),
-  },
-};
+export default {};
 </script>
 
-<style lang="less" scoped>
+<style>
 </style>

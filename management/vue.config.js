@@ -15,5 +15,8 @@ module.exports = {
       args[0].title = "e-Shop-Management";
       return args;
     });
-  }
+  },
+  devServer: {
+    port: 8899,
+  },
 };

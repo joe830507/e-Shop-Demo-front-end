@@ -1,17 +1,18 @@
-import * as Vue from "vue";
-import App from "./App.vue";
-import Vuex from "vuex";
-import router from "./router";
+import Vue from "vue";
 import store from "./store";
+import router from "./router";
+import App from "./App.vue";
 import common from "./mixins/common";
-import request from "./utilities/request";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "animate.css";
+import "vue2-datepicker/index.css";
 
-let app = Vue.createApp(App)
-  .use(store)
-  .use(router);
-app.mixin(common);
-app.config.globalProperties.$http = request;
-app.use(Vuex);
-app.mount("#app");
+Vue.mixin(common);
+
+let app = new Vue({
+  render: (h) => h(App),
+  router,
+  store,
+});
+app.$mount("#app");

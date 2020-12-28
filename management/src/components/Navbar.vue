@@ -21,7 +21,7 @@
           <span class="nav-link navText" data-toggle="modal" data-target="#Login" v-if="!isLogin">登入</span>
         </li>
         <li class="nav-item">
-          <span class="nav-link navText" v-if="isLogin" @click="employeeLogout">登出</span>
+          <span class="nav-link navText" @click="logout" v-if="isLogin">登出</span>
         </li>
       </ul>
     </div>
@@ -35,10 +35,15 @@ export default {
       modalShow: false
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
-    ...mapActions(["employeeLogout"])
+    ...mapActions(["employeeLogout"]),
+    logout() {
+      this.employeeLogout();
+      if (this.$route.path !== "/home") {
+        this.$router.push({ path: "/home" });
+      }
+    }
   }
 };
 </script>
