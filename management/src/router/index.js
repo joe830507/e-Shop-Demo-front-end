@@ -17,6 +17,10 @@ import UpdateSupplier from "../components/Supplier/UpdateSupplier.vue";
 import CustomerTable from "../components/Customer/CustomerTable.vue";
 import AddCustomer from "../components/Customer/AddCustomer.vue";
 import UpdateCustomer from "../components/Customer/UpdateCustomer.vue";
+// ----------------Product
+import ProductTable from "../components/Product/ProductTable.vue";
+import AddProduct from "../components/Product/AddProduct.vue";
+import UpdateProduct from "../components/Product/UpdateProduct.vue";
 
 Vue.use(VueRouter);
 
@@ -85,11 +89,27 @@ const routes = [
   },
   {
     path: "/product",
-    name: "Product",
     meta: {
       chineseName: "產品",
     },
     component: Product,
+    children: [
+      {
+        path: "/",
+        name: "ProductTable",
+        component: ProductTable,
+      },
+      {
+        path: "addProduct",
+        name: "AddProduct",
+        component: AddProduct,
+      },
+      {
+        path: "updateProduct",
+        name: "UpdateProduct",
+        component: UpdateProduct,
+      },
+    ],
   },
   {
     path: "/supplier",

@@ -7,6 +7,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 import "vue2-datepicker/index.css";
+import "vue-msgbox/lib/vue-msgbox.css";
 
 Vue.mixin(common);
 

@@ -26,6 +26,7 @@
           <th scope="col">狀態</th>
           <th scope="col">創建時間</th>
           <th scope="col">角色</th>
+          <th scope="col" v-if="role !== 2">操作</th>
         </tr>
       </thead>
       <tbody class="empDataSet">
@@ -42,16 +43,28 @@
           </th>
           <td>
             <router-link
+              v-if="role !== 2"
               class="empAccount"
               :to="{name:'UpdateEmployee',params:{
               employee:e
             }}"
               tag="span"
             >{{e.account}}</router-link>
+            <span v-else class="empAccount">{{e.account}}</span>
           </td>
           <td>{{e.activate == true?'啟用':'未啟用'}}</td>
           <td>{{e.createTime}}</td>
           <td>{{e.role}}</td>
+          <td class="operations">
+            <router-link
+              v-if="role !== 2"
+              class="badge badge-primary"
+              :to="{name:'UpdateEmployee',params:{
+              employee:e
+            }}"
+              tag="span"
+            >更改</router-link>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -86,10 +99,12 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      empCheckedItem: []
+      empCheckedItem: [],
+      role: null
     };
   },
   created() {
+    this.role = JSON.parse(sessionStorage.getItem("empInfo")).role;
     this.getEmployees();
   },
   methods: {
@@ -167,6 +182,11 @@ export default {
 .btns {
   h3 {
     margin-left: 30rem;
+  }
+}
+.operations {
+  span {
+    cursor: pointer;
   }
 }
 </style>

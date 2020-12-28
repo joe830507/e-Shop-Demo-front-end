@@ -22,6 +22,7 @@ const employee = {
       info = JSON.parse(info);
       state.empInfo.account = info.sub;
       state.empInfo.role = Number(info.Role);
+      sessionStorage.setItem("empInfo", JSON.stringify(state.empInfo));
     },
     logout(state, value) {
       state.isLogin = value;
@@ -96,6 +97,9 @@ const employee = {
     },
     empPages(state) {
       return state.empPages;
+    },
+    empInfo(state) {
+      return state.empInfo;
     },
   },
 };

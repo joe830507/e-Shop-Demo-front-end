@@ -26,6 +26,7 @@
           <th scope="col">電話</th>
           <th scope="col">電子郵件</th>
           <th scope="col">創建時間</th>
+          <th scope="col">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -52,6 +53,22 @@
           <td>{{e.phone}}</td>
           <td>{{e.email}}</td>
           <td>{{e.createTime}}</td>
+          <td class="operations">
+            <router-link
+              class="badge badge-primary"
+              :to="{name:'UpdateEmployee',params:{
+              employee:e
+            }}"
+              tag="span"
+            >叫貨</router-link>
+            <router-link
+              class="badge badge-info"
+              :to="{name:'UpdateEmployee',params:{
+              employee:e
+            }}"
+              tag="span"
+            >叫貨清單</router-link>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -137,7 +154,6 @@ export default {
       if (this.supplierCheckedItems.length === 0) return alert("尚未選擇資料");
       const button = confirm("您確定刪除這些供應商資料嗎?");
       if (button) {
-        console.log(this.supplierCheckedItems);
         this.deleteSupplier({ suppliers: this.supplierCheckedItems }).then(
           () => {
             this.getSuppliers();
@@ -176,6 +192,12 @@ export default {
 .btns {
   h3 {
     margin-left: 30rem;
+  }
+}
+.operations {
+  span {
+    cursor: pointer;
+    margin-left: 5px;
   }
 }
 </style>

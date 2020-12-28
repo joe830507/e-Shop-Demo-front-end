@@ -12,25 +12,31 @@ myRequest.prototype.send = function(uri, method, body) {
     },
   };
   let url = myRequest.prototype.baseUrl + uri;
-  return fetch(url, requestOptions).then((res) => {
-    if (res.status == 401) {
-      const l = window.location;
-      sessionStorage.removeItem("token");
-      alert("抱歉，您未被授權使用該功能。");
-      document.location.href = `${l.protocol}//${l.hostname}:${l.port}/home`;
-    }
-    if (res.status == 204) {
-      alert("操作成功");
+  return fetch(url, requestOptions)
+    .then((res) => {
+      if (res.status == 401) {
+        const l = window.location;
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("empInfo");
+        alert("抱歉，您未被授權使用該功能。");
+        document.location.href = `${l.protocol}//${l.hostname}:${l.port}/home`;
+      }
+      if (res.status == 204) {
+        alert("操作成功");
+        return new Promise((resolve) => {
+          resolve(res);
+        });
+      }
       return new Promise((resolve) => {
-        resolve(res);
+        res.json().then((res) => {
+          resolve(res);
+        });
       });
-    }
-    return new Promise((resolve) => {
-      res.json().then((res) => {
-        resolve(res);
-      });
+    })
+    .catch(() => {
+      const l = window.location;
+      document.location.href = `${l.protocol}//${l.hostname}:${l.port}/home`;
     });
-  });
 };
 const request = new myRequest();
 export default request;

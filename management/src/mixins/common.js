@@ -1,5 +1,6 @@
 import sha256 from "crypto-js/sha256";
 import Base64 from "crypto-js/enc-base64";
+import urlRegex from "url-regex";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -15,6 +16,12 @@ export default {
         email: "電子郵件格式錯誤",
         password: "密碼格式錯誤",
         birthDate: "日期格式錯誤",
+        productName: "產品名稱格式錯誤",
+        productPrice: "產品價格格式錯誤",
+        productQuantity: "產品數量格式錯誤",
+        productType: "請選擇產品類型",
+        productPictureLink: "產品圖片連結格式錯誤",
+        productDescription: "產品描述格式錯誤",
       },
     };
   },
@@ -53,6 +60,30 @@ export default {
     },
     validateRole(data) {
       return data !== null && (data >= 0 || data <= 2);
+    },
+    validateProductName(data) {
+      const regex = /^[\u4e00-\u9fa5a-zA-Z0-9]{1,20}$/;
+      return this.sendResult(data && regex.test(data), this.error.productName);
+    },
+    validateProductPrice(data) {
+      const regex = /^[0-9]{1,8}$/;
+      return this.sendResult(regex.test(data), this.error.productPrice);
+    },
+    validateProductQuantity(data) {
+      const regex = /^[0-9]{1,8}$/;
+      return this.sendResult(regex.test(data), this.error.productQuantity);
+    },
+    validateProductType(data) {
+      const isValid = data !== null && data !== undefined && data !== "";
+      return this.sendResult(isValid, this.error.productType);
+    },
+    validateProductPictureLink(data) {
+      const regex = urlRegex({ exact: true });
+      return this.sendResult(regex.test(data), this.error.productPictureLink);
+    },
+    validateProductDescription(data) {
+      const regex = /^[\u4e00-\u9fa5a-zA-Z0-9\s]{0,200}$/;
+      return this.sendResult(regex.test(data), this.error.productDescription);
     },
     sendResult(isPassed, msg) {
       if (!isPassed) alert(msg);

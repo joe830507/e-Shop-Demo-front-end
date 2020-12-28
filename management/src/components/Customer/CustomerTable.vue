@@ -135,7 +135,6 @@ export default {
       if (this.customerCheckedItems.length === 0) return alert("尚未選擇資料");
       const button = confirm("您確定刪除這些顧客資料嗎?");
       if (button) {
-        console.log(this.customerCheckedItems);
         this.deleteCustomer({ customers: this.customerCheckedItems }).then(
           () => {
             this.getCustomers();
