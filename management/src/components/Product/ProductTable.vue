@@ -1,13 +1,32 @@
 <template>
   <div>
-    <div class="btn-group mt-5 ml-3 btns" role="group" aria-label="Basic example">
+    <h1 class="mt-5 ml-3">
+      <span class="badge badge-secondary">產品列表</span>
+    </h1>
+    <div class="btn-group mt-3 ml-3 btns" role="group" aria-label="Basic example">
       <div>
         <router-link :to="{name:'AddProduct'}" class="btn btn-primary" tag="button">新增</router-link>
       </div>
       <div>
         <button class="btn btn-danger ml-3" @click="sendDeleteRequest">刪除</button>
       </div>
-      <h3>產品列表</h3>
+      <div>
+        <button class="btn btn-info ml-3" data-toggle="modal" data-target="#AddProductType">新增產品分類</button>
+      </div>
+      <div class="ml-3 float-right" role="group" aria-label="Basic example">
+        <div class="input-group mb-3 typeSelector">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">供應商類型</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01" v-model="query.productType">
+            <option selected :value="null">請選擇...</option>
+            <option :value="x.id" v-for="(x,index) in productTypes" :key="index">{{x.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <button class="ml-3 btn btn-primary queryBtn" @click="queryRequest">查詢</button>
+      </div>
     </div>
     <table class="table table-dark table-striped mt-3 ml-3">
       <thead>
@@ -80,22 +99,70 @@
         </li>
       </ul>
     </nav>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="AddProductType"
+      tabindex="-1"
+      aria-labelledby="AddProductTypeLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="AddProductTypeLabel">新增產品類型</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row mb-3">
+                <label for="Account" class="col-sm-2 col-form-label">名稱</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" v-model="productType.name" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            <button type="button" class="btn btn-primary" @click="sendAddProductType">送出</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import $ from "jquery";
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      productCheckedItems: []
+      productCheckedItems: [],
+      productType: {
+        name: null
+      },
+      query: {
+        productType: null
+      }
     };
   },
   created() {
     this.getProducts();
   },
   methods: {
-    ...mapActions(["getProducts", "deleteProducts"]),
+    ...mapActions(["getProducts", "deleteProducts", "addProductType"]),
+    queryRequest() {
+      if (this.query.productType) {
+        const queryString = `?productType=${this.query.productType}`;
+        this.getProducts(queryString);
+      } else {
+        this.getProducts();
+      }
+    },
     checkOrUncheckProduct(e) {
       const isTheId = element => element === e.target.value;
       const index = this.productCheckedItems.findIndex(isTheId);
@@ -148,6 +215,13 @@ export default {
       this.$refs.all.checked = false;
       this.$refs.myInput.forEach(e => {
         e.checked = false;
+      });
+    },
+    sendAddProductType() {
+      this.addProductType(this.productType).then(() => {
+        this.productType.name = null;
+        $("#AddProductType").modal("hide");
+        this.getProducts();
       });
     }
   },

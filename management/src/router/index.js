@@ -13,6 +13,8 @@ import UpdateEmployee from "../components/Employee/UpdateEmployee.vue";
 import SupplierTable from "../components/Supplier/SupplierTable.vue";
 import AddSupplier from "../components/Supplier/AddSupplier.vue";
 import UpdateSupplier from "../components/Supplier/UpdateSupplier.vue";
+import ImportGoods from "../components/Supplier/ImportGoods.vue";
+import ImportRecords from "../components/Supplier/ImportRecords.vue";
 // ----------------Customer
 import CustomerTable from "../components/Customer/CustomerTable.vue";
 import AddCustomer from "../components/Customer/AddCustomer.vue";
@@ -132,6 +134,16 @@ const routes = [
         path: "updateSupplier",
         name: "UpdateSupplier",
         component: UpdateSupplier,
+      },
+      {
+        path: "importGoods",
+        name: "ImportGoods",
+        component: ImportGoods,
+      },
+      {
+        path: "importRecords",
+        name: "ImportRecords",
+        component: ImportRecords,
       },
     ],
   },

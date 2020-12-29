@@ -1,4 +1,5 @@
 import req from "../../requests/product";
+import reqForProductType from "../../requests/productType";
 const product = {
   state: {
     products: [],
@@ -56,6 +57,21 @@ const product = {
           commit("displayLoading", true);
           resolve();
         });
+      });
+    },
+    addProductType({ commit }, payload) {
+      commit("displayLoading", false);
+      return new Promise((resolve) => {
+        reqForProductType
+          .addProductType(payload)
+          .then(() => {
+            commit("displayLoading", true);
+            resolve();
+          })
+          .catch((error) => {
+            alert(error);
+            commit("displayLoading", false);
+          });
       });
     },
   },

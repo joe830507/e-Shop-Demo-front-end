@@ -37,13 +37,23 @@
           placeholder="請輸入供應商電子郵件"
         />
       </div>
+      <br />
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">供應商類型</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" v-model="supplier.productType">
+          <option selected :value="null">請選擇...</option>
+          <option :value="x.id" v-for="(x,index) in productTypeArray" :key="index">{{x.name}}</option>
+        </select>
+      </div>
       <button class="btn btn-primary float-right mt-3" @click="send">送出</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -52,8 +62,10 @@ export default {
         name: null,
         phone: null,
         email: null,
+        productType: null,
         createTime: null
-      }
+      },
+      productTypeArray: []
     };
   },
   created() {
@@ -63,20 +75,43 @@ export default {
     } else {
       this.supplier = JSON.parse(sessionStorage.getItem("supplier"));
     }
+    this.setProductTypes();
+    console.log(this.supplier);
   },
   methods: {
     ...mapActions(["updateSupplier"]),
     send() {
       const data = Object.assign({}, this.supplier);
-      if (this.validatePhone(data.phone) && this.validateName(data.name)) {
+      if (
+        this.validatePhone(data.phone) &&
+        this.validateName(data.name) &&
+        this.validateProductType(data.productType)
+      ) {
         this.updateSupplier(data).then(() => {
           this.$router.push({ name: "SupplierTable" });
         });
       }
+    },
+    setProductTypes() {
+      if (this.productTypes.length !== 0) {
+        sessionStorage.setItem(
+          "productTypes",
+          JSON.stringify(this.productTypes)
+        );
+        this.productTypeArray = Object.assign({}, this.productTypes);
+      } else {
+        this.productTypeArray = JSON.parse(
+          sessionStorage.getItem("productTypes")
+        );
+      }
     }
+  },
+  computed: {
+    ...mapGetters(["productTypes"])
   },
   beforeRouteLeave(to, from, next) {
     sessionStorage.removeItem("supplier");
+    sessionStorage.removeItem("productTypes");
     next();
   }
 };

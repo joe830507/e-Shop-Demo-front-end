@@ -21,7 +21,7 @@ const employee = {
       info = atob(info);
       info = JSON.parse(info);
       state.empInfo.account = info.sub;
-      state.empInfo.role = Number(info.Role);
+      state.empInfo.role = Number(info.role);
       sessionStorage.setItem("empInfo", JSON.stringify(state.empInfo));
     },
     logout(state, value) {
@@ -74,9 +74,18 @@ const employee = {
       });
     },
     employeeLogout(context) {
-      sessionStorage.removeItem("token");
-      let token = sessionStorage.getItem("token");
-      context.commit("logout", !!token);
+      req.employeeLogout().then(() => {
+        let token = sessionStorage.getItem("token");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("empInfo");
+        context.commit("logout", !!token);
+        const location = window.location;
+        if ("/home" === location.pathname) {
+          location.reload();
+        } else {
+          document.location.href = `${location.protocol}//${location.hostname}:${location.port}/home`;
+        }
+      });
     },
     deleteEmployee({ commit }, payload) {
       commit("displayLoading", false);

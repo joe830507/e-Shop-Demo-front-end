@@ -1,14 +1,31 @@
 <template>
   <div>
-    <div class="btn-group mt-5 ml-3 btns" role="group" aria-label="Basic example">
+    <h1 class="mt-5 ml-3">
+      <span class="badge badge-secondary">供應商列表</span>
+    </h1>
+    <div class="d-flex mt-3 btns">
       <div>
-        <router-link :to="{name:'AddSupplier'}" class="btn btn-primary" tag="button">新增</router-link>
+        <router-link :to="{name:'AddSupplier'}" class="ml-3 btn btn-primary" tag="button">新增</router-link>
       </div>
       <div>
-        <button class="btn btn-danger ml-3" @click="sendDeleteRequest">刪除</button>
+        <button class="ml-3 btn btn-danger" @click="sendDeleteRequest">刪除</button>
       </div>
-      <h3>供應商列表</h3>
+      <div class="ml-3 float-right" role="group" aria-label="Basic example">
+        <div class="input-group mb-3 typeSelector">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">供應商類型</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01" v-model="query.productType">
+            <option selected :value="null">請選擇...</option>
+            <option :value="x.id" v-for="(x,index) in productTypes" :key="index">{{x.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <button class="ml-3 btn btn-primary queryBtn" @click="queryRequest">查詢</button>
+      </div>
     </div>
+
     <table class="table table-dark table-striped mt-3 ml-3">
       <thead>
         <tr>
@@ -25,6 +42,7 @@
           <th scope="col">名稱</th>
           <th scope="col">電話</th>
           <th scope="col">電子郵件</th>
+          <th scope="col">供貨類型</th>
           <th scope="col">創建時間</th>
           <th scope="col">操作</th>
         </tr>
@@ -52,11 +70,12 @@
           </td>
           <td>{{e.phone}}</td>
           <td>{{e.email}}</td>
+          <td>{{setProductType(e)}}</td>
           <td>{{e.createTime}}</td>
           <td class="operations">
             <router-link
               class="badge badge-primary"
-              :to="{name:'UpdateEmployee',params:{
+              :to="{name:'ImportGoods',params:{
               employee:e
             }}"
               tag="span"
@@ -105,7 +124,10 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      supplierCheckedItems: []
+      supplierCheckedItems: [],
+      query: {
+        productType: null
+      }
     };
   },
   created() {
@@ -113,6 +135,14 @@ export default {
   },
   methods: {
     ...mapActions(["getSuppliers", "deleteSupplier"]),
+    queryRequest() {
+      if (this.query.productType) {
+        const queryString = `?productType=${this.query.productType}`;
+        this.getSuppliers(queryString);
+      } else {
+        this.getSuppliers();
+      }
+    },
     checkOrUncheckSupplier(e) {
       const isTheId = element => element === e.target.value;
       const index = this.supplierCheckedItems.findIndex(isTheId);
@@ -168,10 +198,15 @@ export default {
       this.$refs.myInput.forEach(e => {
         e.checked = false;
       });
+    },
+    setProductType(e) {
+      return this.productTypes.filter(value => {
+        return value.id === e.productType;
+      })[0].name;
     }
   },
   computed: {
-    ...mapGetters(["suppliers", "supplierPages"])
+    ...mapGetters(["suppliers", "supplierPages", "productTypes"])
   }
 };
 </script>
@@ -189,15 +224,14 @@ export default {
 .supplierName:hover {
   color: rgb(207, 207, 207);
 }
-.btns {
-  h3 {
-    margin-left: 30rem;
-  }
-}
 .operations {
   span {
     cursor: pointer;
     margin-left: 5px;
   }
+}
+.typeSelector {
+  height: 30px;
+  width: 300px;
 }
 </style>

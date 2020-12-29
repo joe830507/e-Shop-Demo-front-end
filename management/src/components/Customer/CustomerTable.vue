@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div class="btn-group mt-5 ml-3 btns" role="group" aria-label="Basic example">
+    <h1 class="mt-5 ml-3">
+      <span class="badge badge-secondary">顧客列表</span>
+    </h1>
+    <div class="btn-group mt-3 ml-3 btns" role="group" aria-label="Basic example">
       <div>
         <router-link :to="{name:'AddCustomer'}" class="btn btn-primary" tag="button">新增</router-link>
       </div>
       <div>
         <button class="btn btn-danger ml-3" @click="sendDeleteRequest">刪除</button>
       </div>
-      <h3>顧客列表</h3>
     </div>
     <table class="table table-dark table-striped mt-3 ml-3">
       <thead>

@@ -4,6 +4,9 @@ export default {
   employeeLogin: function(body) {
     return request.send(`${prefix}/login`, "POST", body);
   },
+  employeeLogout: function() {
+    return request.send(`${prefix}/logout`, "POST");
+  },
   addEmployee: function(body) {
     return request.send(`${prefix}`, "POST", body);
   },

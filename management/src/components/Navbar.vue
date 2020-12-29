@@ -40,9 +40,6 @@ export default {
     ...mapActions(["employeeLogout"]),
     logout() {
       this.employeeLogout();
-      if (this.$route.path !== "/home") {
-        this.$router.push({ path: "/home" });
-      }
     }
   }
 };

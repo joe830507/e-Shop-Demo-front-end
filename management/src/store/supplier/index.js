@@ -23,6 +23,7 @@ const supplier = {
       req.getSuppliers(payload).then((res) => {
         commit("suppliers", res.body);
         commit("supplierPages", res.pages);
+        commit("productTypes", res.productTypes);
         commit("displayLoading", true);
       });
     },
