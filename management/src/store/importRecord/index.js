@@ -41,7 +41,6 @@ const importRecord = {
       req.getImportRecords(payload).then((res) => {
         commit("importRecords", res.body);
         commit("importRecordPages", res.pages);
-        commit("products", res.products);
         commit("displayLoading", true);
       });
     },

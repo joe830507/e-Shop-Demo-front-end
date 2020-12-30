@@ -140,7 +140,7 @@ export default {
     ...mapActions(["getSuppliers", "deleteSupplier"]),
     queryRequest() {
       if (this.query.productType) {
-        const queryString = `?productType=${this.query.productType}`;
+        const queryString = `?productTypeID=${this.query.productType}`;
         this.getSuppliers(queryString);
       } else {
         this.getSuppliers();
@@ -204,7 +204,7 @@ export default {
     },
     setProductType(e) {
       return this.productTypes.filter(value => {
-        return value.id === e.productType;
+        return value.id === e.productTypeID;
       })[0].name;
     }
   },

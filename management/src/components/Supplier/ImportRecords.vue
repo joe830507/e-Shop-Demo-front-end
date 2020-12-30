@@ -218,8 +218,7 @@ export default {
       data.importPrice = Number(data.importPrice);
       data.quantity = Number(data.quantity);
       data.status = Number(data.status);
-      this.updateImportRecord(data).then(res => {
-        console.log(res);
+      this.updateImportRecord(data).then(() => {
         $("#UpdateImportRecord").modal("hide");
         this.temporarilyStoreSupplier();
         this.queryRequest();

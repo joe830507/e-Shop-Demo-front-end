@@ -42,7 +42,7 @@
         <div class="input-group-prepend">
           <label class="input-group-text" for="inputGroupSelect01">類型</label>
         </div>
-        <select class="custom-select" id="inputGroupSelect01" v-model="product.type">
+        <select class="custom-select" id="inputGroupSelect01" v-model="product.productTypeId">
           <option selected :value="null">請選擇...</option>
           <option :value="x.id" v-for="(x,index) in productTypeArray" :key="index">{{x.name}}</option>
         </select>
@@ -121,7 +121,7 @@ export default {
         name: null,
         price: 0,
         quantity: 0,
-        type: null,
+        productTypeId: null,
         description: null,
         pictureLink: null
       },
@@ -150,7 +150,7 @@ export default {
         this.validateProductName(data.name) &&
         this.validateProductPrice(data.price) &&
         this.validateProductQuantity(data.quantity) &&
-        this.validateProductType(data.type) &&
+        this.validateProductType(data.productTypeId) &&
         this.validateProductPictureLink(data.pictureLink) &&
         this.validateProductDescription(data.description)
       ) {
