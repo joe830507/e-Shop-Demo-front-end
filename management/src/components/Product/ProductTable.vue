@@ -16,7 +16,7 @@
       <div class="ml-3 float-right" role="group" aria-label="Basic example">
         <div class="input-group mb-3 typeSelector">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">供應商類型</label>
+            <label class="input-group-text" for="inputGroupSelect01">產品類型</label>
           </div>
           <select class="custom-select" id="inputGroupSelect01" v-model="query.productType">
             <option selected :value="null">請選擇...</option>
@@ -73,6 +73,9 @@
           <td>{{e.quantity}}</td>
           <td>{{e.type}}</td>
           <td>{{e.createTime}}</td>
+        </tr>
+        <tr v-if="products.length === 0">
+          <td colspan="6" class="text-center">查無資訊</td>
         </tr>
       </tbody>
     </table>

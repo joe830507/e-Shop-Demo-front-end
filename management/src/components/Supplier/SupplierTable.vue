@@ -76,18 +76,21 @@
             <router-link
               class="badge badge-primary"
               :to="{name:'ImportGoods',params:{
-              employee:e
+              supplier:e
             }}"
               tag="span"
             >叫貨</router-link>
             <router-link
               class="badge badge-info"
-              :to="{name:'UpdateEmployee',params:{
-              employee:e
+              :to="{name:'ImportRecords',params:{
+              supplier:e
             }}"
               tag="span"
             >叫貨清單</router-link>
           </td>
+        </tr>
+        <tr v-if="suppliers.length === 0">
+          <td colspan="7" class="text-center">查無資訊</td>
         </tr>
       </tbody>
     </table>

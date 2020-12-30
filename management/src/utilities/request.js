@@ -24,12 +24,13 @@ myRequest.prototype.send = function(uri, method, body) {
       }
       if (res.status == 401) {
         const l = window.location;
-        // sessionStorage.removeItem("token");
-        // sessionStorage.removeItem("empInfo");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("empInfo");
         alert("抱歉，您未被授權使用該功能。");
         document.location.href = `${l.protocol}//${l.hostname}:${l.port}/home`;
       }
       if (res.status == 204) {
+        alert("操作完成");
         return new Promise((resolve) => {
           resolve(res);
         });

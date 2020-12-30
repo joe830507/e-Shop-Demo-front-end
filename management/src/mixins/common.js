@@ -82,7 +82,7 @@ export default {
       return this.sendResult(regex.test(data), this.error.productPictureLink);
     },
     validateProductDescription(data) {
-      const regex = /^[\u4e00-\u9fa5a-zA-Z0-9\s]{0,200}$/;
+      const regex = /^[\u4e00-\u9fa5_a-zA-Z0-9\s,.。;'`~()_-，；!?@#$%^&*+=]{0,200}$/;
       return this.sendResult(regex.test(data), this.error.productDescription);
     },
     sendResult(isPassed, msg) {
