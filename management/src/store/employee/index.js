@@ -73,12 +73,14 @@ const employee = {
         commit("displayLoading", true);
       });
     },
-    employeeLogout(context) {
+    employeeLogout({ commit }) {
+      commit("displayLoading", false);
       req.employeeLogout().then(() => {
         let token = sessionStorage.getItem("token");
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("empInfo");
-        context.commit("logout", !!token);
+        commit("logout", !!token);
+        commit("displayLoading", true);
         const location = window.location;
         if ("/home" === location.pathname) {
           location.reload();
