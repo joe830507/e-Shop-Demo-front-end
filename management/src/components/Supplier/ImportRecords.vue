@@ -27,7 +27,13 @@
           <td>{{setImportStatus(e.status)}}</td>
           <td>{{e.createTime}}</td>
           <td>
-            <span class="badge badge-primary" v-if="e.status===1">更新</span>
+            <span
+              class="badge badge-primary recordUpdate"
+              data-toggle="modal"
+              data-target="#UpdateImportRecord"
+              @click="setValueToImportRecord(e)"
+              v-if="e.status===1"
+            >更新</span>
           </td>
         </tr>
         <tr v-if="importRecords.length === 0">
@@ -60,19 +66,81 @@
         </li>
       </ul>
     </nav>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="UpdateImportRecord"
+      tabindex="-1"
+      aria-labelledby="updateImportRecordLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateImportRecordLabel">叫貨記錄更新</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3 form-group">
+              <label class="col-sm-4 col-form-label">進貨價格</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" v-model="importRecord.importPrice" />
+              </div>
+            </div>
+            <div class="row mb-3 form-group">
+              <label class="col-sm-4 col-form-label">數量</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" v-model="importRecord.quantity" />
+              </div>
+            </div>
+            <div class="row mb-3 form-group">
+              <label class="col-sm-4 col-form-label">狀態</label>
+              <div class="col-sm-8">
+                <select class="custom-select" v-model="importRecord.status">
+                  <option :value="x.status" v-for="(x,index) in statusArray" :key="index">{{x.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            <button type="button" class="btn btn-primary" @click="sendUpdateRequest">送出</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import $ from "jquery";
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       ImportRecordCheckedItems: [],
+      statusArray: [
+        {
+          status: 1,
+          name: "已叫貨"
+        },
+        {
+          status: 2,
+          name: "已到貨"
+        }
+      ],
       supplier: {
         id: null,
         name: null,
         productType: null
+      },
+      importRecord: {
+        id: null,
+        importPrice: null,
+        quantity: null,
+        status: null
       }
     };
   },
@@ -141,6 +209,21 @@ export default {
       if (lengthOfMyInputs !== this.ImportRecordCheckedItems.length)
         this.$refs.all.checked = false;
       else this.$refs.all.checked = true;
+    },
+    setValueToImportRecord(e) {
+      this.importRecord = Object.assign({}, e);
+    },
+    sendUpdateRequest() {
+      const data = Object.assign({}, this.importRecord);
+      data.importPrice = Number(data.importPrice);
+      data.quantity = Number(data.quantity);
+      data.status = Number(data.status);
+      this.updateImportRecord(data).then(res => {
+        console.log(res);
+        $("#UpdateImportRecord").modal("hide");
+        this.temporarilyStoreSupplier();
+        this.queryRequest();
+      });
     }
   },
   computed: {
@@ -154,11 +237,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.importRecordCheckbox {
-  margin-left: 10px;
-}
-
-.cbForAll {
-  margin-left: 10px;
+.recordUpdate {
+  cursor: pointer;
 }
 </style>
