@@ -28,6 +28,7 @@
           <th scope="col">生日</th>
           <th scope="col">狀態</th>
           <th scope="col">創建時間</th>
+          <th scope="col">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +55,18 @@
           <td>{{e.birthDate}}</td>
           <td>{{e.activate == true?'啟用':'未啟用'}}</td>
           <td>{{e.createTime}}</td>
+          <td>
+            <router-link
+              class="purchaseRecords badge badge-primary"
+              :to="{
+              name:'PurchaseRecordTable',
+              params:{
+                customer:e
+              }
+            }"
+              tag="span"
+            >購買紀錄</router-link>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -166,7 +179,8 @@ export default {
 .cbForAll {
   margin-left: 10px;
 }
-.customerName {
+.customerName,
+.purchaseRecords {
   cursor: pointer;
 }
 .customerName:hover {

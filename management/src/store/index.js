@@ -6,6 +6,7 @@ import employee from "./employee";
 import supplier from "./supplier";
 import loading from "./loading";
 import importRecord from "./importRecord";
+import purchaseRecord from "./purchaseRecord";
 
 Vue.use(Vuex);
 const allModules = {
@@ -16,6 +17,7 @@ const allModules = {
     supplier,
     loading,
     importRecord,
+    purchaseRecord,
   },
 };
 const store = new Vuex.Store(allModules);

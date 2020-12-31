@@ -19,6 +19,7 @@ import ImportRecords from "../components/Supplier/ImportRecords.vue";
 import CustomerTable from "../components/Customer/CustomerTable.vue";
 import AddCustomer from "../components/Customer/AddCustomer.vue";
 import UpdateCustomer from "../components/Customer/UpdateCustomer.vue";
+import PurchaseRecordTable from "../components/Customer/PurchaseRecordTable.vue";
 // ----------------Product
 import ProductTable from "../components/Product/ProductTable.vue";
 import AddProduct from "../components/Product/AddProduct.vue";
@@ -86,6 +87,11 @@ const routes = [
         path: "updateCustomer",
         name: "UpdateCustomer",
         component: UpdateCustomer,
+      },
+      {
+        path: "purchaseRecordTable",
+        name: "PurchaseRecordTable",
+        component: PurchaseRecordTable,
       },
     ],
   },
