@@ -1,36 +1,65 @@
 import req from "../../requests/customer";
 const customer = {
   state: {
-    isLogin: !!sessionStorage.getItem("token"),
+    customers: [],
+    custPages: {
+      totalCount: 0,
+      pageSize: 10,
+      currentPage: 1,
+      totalPages: 1,
+    },
   },
   mutations: {
-    isLogin(state, value) {
-      state.isLogin = value;
+    customers(state, value) {
+      state.customers = value;
+    },
+    custPages(state, value) {
+      state.custPages = value;
     },
   },
   actions: {
-    custLogin(context, payload) {
-      return req.custLogin(payload).then((res) => {
-        const token = res.token;
-        sessionStorage.setItem("token", token);
-        context.commit("isLogin", true);
-        return new Promise((resolve) => {
+    addCustomer({ commit }, payload) {
+      commit("displayLoading", false);
+      return new Promise((resolve) => {
+        req.addCustomer(payload).then(() => {
+          commit("displayLoading", true);
           resolve();
         });
       });
     },
-    custRegister(context, payload) {
-      return req.custRegister(payload);
+    updateCustomer({ commit }, payload) {
+      commit("displayLoading", false);
+      return new Promise((resolve) => {
+        req.updateCustomer(payload).then(() => {
+          commit("displayLoading", true);
+          resolve();
+        });
+      });
     },
-    custLogout(context) {
-      sessionStorage.removeItem("token");
-      let token = sessionStorage.getItem("token");
-      context.commit("isLogin", !!token);
+    getCustomers({ commit }, payload) {
+      commit("displayLoading", false);
+      req.getCustomers(payload).then((res) => {
+        commit("customers", res.body);
+        commit("custPages", res.pages);
+        commit("displayLoading", true);
+      });
+    },
+    deleteCustomer({ commit }, payload) {
+      commit("displayLoading", false);
+      return new Promise((resolve) => {
+        req.deleteCustomer(payload).then(() => {
+          commit("displayLoading", true);
+          resolve();
+        });
+      });
     },
   },
   getters: {
-    isLogin: (state) => {
-      return state.isLogin;
+    customers: (state) => {
+      return state.customers;
+    },
+    custPages(state) {
+      return state.custPages;
     },
   },
 };

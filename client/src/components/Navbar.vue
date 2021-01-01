@@ -18,44 +18,10 @@
     <div class="collapse navbar-collapse justify-content-end" id="collapsibileNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <router-link class="nav-link navText" :to="{name:'Home'}">首頁</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link navText" :to="{name:'Home'}">購物車</router-link>
-        </li>
-        <li class="nav-item">
           <span class="nav-link navText" data-toggle="modal" data-target="#Login" v-if="!isLogin">登入</span>
         </li>
         <li class="nav-item">
-          <span
-            class="nav-link navText"
-            data-toggle="modal"
-            data-target="#Register"
-            v-if="!isLogin"
-          >註冊</span>
-        </li>
-        <li class="nav-item">
-          <span class="nav-link navText" v-if="isLogin" @click="custLogout">登出</span>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >產品分類</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#" v-for="x in productTypes" :key="x">{{ x }}</a>
-          </div>
+          <span class="nav-link navText" @click="logout" v-if="isLogin">登出</span>
         </li>
       </ul>
     </div>
@@ -69,11 +35,12 @@ export default {
       modalShow: false
     };
   },
-  created() {
-    this.fetchProductTypes();
-  },
+  created() {},
   methods: {
-    ...mapActions(["fetchProductTypes", "custLogout"])
+    ...mapActions(["employeeLogout"]),
+    logout() {
+      this.employeeLogout();
+    }
   }
 };
 </script>

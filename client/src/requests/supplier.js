@@ -1,16 +1,16 @@
 import request from "../utilities/request";
-const prefix = "/customer";
+const prefix = "/supplier";
 export default {
-  getCustomers: function(body) {
+  getSuppliers: function(body) {
     return request.send(`${prefix}${body ?? ""}`, "GET");
   },
-  addCustomer: function(body) {
+  addSupplier: function(body) {
     return request.send(`${prefix}`, "POST", body);
   },
-  updateCustomer: function(body) {
+  updateSupplier: function(body) {
     return request.send(`${prefix}`, "PUT", body);
   },
-  deleteCustomer: function(body) {
+  deleteSuppliers: function(body) {
     return request.send(`${prefix}`, "DELETE", body);
   },
 };
