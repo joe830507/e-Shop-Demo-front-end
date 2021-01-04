@@ -1,13 +1,6 @@
 <template>
   <div>
-    <!-- <div class="mt-5 ml-5">
-      <button @click="sendMessage" class="btn btn-primary" :disabled="!message">sendMessage</button>
-      <input type="textarea" v-model="message" class="ml-5" />
-    </div>
-    <div class="messageBoard container" ref="messageBoard">
-      <br />
-    </div>-->
-    <h1 class="animate__animated animate__backInDown welcomeTexts">Welcome to e-Shop management.</h1>
+    <h1 class="animate__animated animate__backInDown welcomeTexts">Welcome to e-Shop.</h1>
   </div>
 </template>
 <script>

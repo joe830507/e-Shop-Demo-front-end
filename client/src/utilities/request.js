@@ -41,7 +41,8 @@ myRequest.prototype.send = function(uri, method, body) {
         });
       });
     })
-    .catch(() => {
+    .catch((error) => {
+      console.log(error);
       alert("網路異常，將重新導向至首頁");
       const l = window.location;
       document.location.href = `${l.protocol}//${l.hostname}:${l.port}/home`;

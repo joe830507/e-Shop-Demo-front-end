@@ -26,11 +26,11 @@ export default {
     };
   },
   created() {},
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      return vm.$store.state.employee.isLogin;
-    });
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   next((vm) => {
+  //     return vm.$store.state.employee.isLogin;
+  //   });
+  // },
   methods: {
     encrypt(message) {
       return Base64.stringify(sha256(message));

@@ -12,11 +12,11 @@ module.exports = {
   },
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
-      args[0].title = "e-Shop-Client";
+      args[0].title = "e-Shop";
       return args;
     });
   },
   devServer: {
-    port: 8080,
+    port: 8055,
   },
 };

@@ -59,19 +59,11 @@ const product = {
         });
       });
     },
-    addProductType({ commit }, payload) {
+    getProductTypes({ commit }, payload) {
       commit("displayLoading", false);
-      return new Promise((resolve) => {
-        reqForProductType
-          .addProductType(payload)
-          .then(() => {
-            commit("displayLoading", true);
-            resolve();
-          })
-          .catch((error) => {
-            alert(error);
-            commit("displayLoading", false);
-          });
+      reqForProductType.getProductTypes(payload).then((res) => {
+        commit("productTypes", res);
+        commit("displayLoading", true);
       });
     },
   },

@@ -7,6 +7,25 @@
         src="../assets/a23e9968-7011-436e-b498-092ecbdf4252_200x200.png"
       />
     </router-link>
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >產品分類</button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div v-for="(p,index) in productTypes" :key="index">
+          <router-link
+            :to="{path:'/product',query:{type:p.id}}"
+            tag="a"
+            class="dropdown-item"
+          >{{p.name}}</router-link>
+        </div>
+      </div>
+    </div>
     <button
       class="navbar-toggler"
       type="button"
@@ -21,6 +40,14 @@
           <span class="nav-link navText" data-toggle="modal" data-target="#Login" v-if="!isLogin">登入</span>
         </li>
         <li class="nav-item">
+          <span
+            class="nav-link navText"
+            data-toggle="modal"
+            data-target="#Register"
+            v-if="!isLogin"
+          >註冊</span>
+        </li>
+        <li class="nav-item">
           <span class="nav-link navText" @click="logout" v-if="isLogin">登出</span>
         </li>
       </ul>
@@ -28,19 +55,22 @@
   </nav>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
       modalShow: false
     };
   },
-  created() {},
+  created() {
+    this.getProductTypes();
+  },
   methods: {
-    ...mapActions(["employeeLogout"]),
-    logout() {
-      this.employeeLogout();
-    }
+    ...mapActions(["customerLogin", "getProductTypes"]),
+    logout() {}
+  },
+  computed: {
+    ...mapGetters(["productTypes"])
   }
 };
 </script>

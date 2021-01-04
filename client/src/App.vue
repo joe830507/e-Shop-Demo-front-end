@@ -3,10 +3,7 @@
     <Navbar />
     <div class="container-fluid">
       <div class="row">
-        <div class="col-2">
-          <Sidebar />
-        </div>
-        <div class="col-9">
+        <div class="col-12">
           <router-view />
         </div>
       </div>
@@ -17,7 +14,6 @@
 </template>
 <script>
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import Modal from "./components/Modal";
 import Loading from "./components/Loading";
 export default {
@@ -27,7 +23,6 @@ export default {
   },
   components: {
     Navbar,
-    Sidebar,
     Modal,
     Loading
   }
